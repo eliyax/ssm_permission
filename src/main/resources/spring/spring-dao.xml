@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 配置整合mybatis过程 -->
+    <!-- 1.配置数据库相关参数properties的属性：${url} -->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
+    <!--druid配置-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <!--基本配置，驱动，url，用户，密码-->
+        <property name="driverClassName" value="${jdbc.driverClass}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+
+        <!--初始化大小-->
+        <property name="initialSize" value="${druid.initialSize}"/>
+        <!--最小闲置数-->
+        <property name="minIdle" value="${druid.minIdle}"/>
+        <!--最大活跃数-->
+        <property name="maxActive" value="${druid.maxActive}"/>
+        <!--最大等待时间-->
+        <property name="maxWait" value="${druid.maxWait}"/>
+        <!--配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒-->
+        <property name="timeBetweenEvictionRunsMillis" value="${druid.timeBetweenEvictionRunsMillis}"/>
+        <!--配置一个连接在池中最小生存的时间，单位是毫秒-->
+        <property name="minEvictableIdleTimeMillis" value="${druid.minEvictableIdleTimeMillis}"/>
+        <!--验证查询-->
+        <property name="validationQuery" value="${druid.validationQuery}"/>
+        <!--闲置时测试-->
+        <property name="testWhileIdle" value="${druid.testWhileIdle}"/>
+        <!--调用时测试-->
+        <property name="testOnBorrow" value="${druid.testOnBorrow}"/>
+        <!--返回时测试-->
+        <property name="testOnReturn" value="${druid.testOnReturn}"/>
+        <!--打开PSCache，并且指定每个连接上PSCache的大小-->
+        <!--如果用Oracle，则把poolPreparedStatements配置为true，mysql可以配置为false。分库分表较多的数据库，建议配置为false。-->
+        <property name="poolPreparedStatements" value="${druid.poolPreparedStatements}"/>
+        <property name="maxPoolPreparedStatementPerConnectionSize"
+                  value="${druid.maxPoolPreparedStatementPerConnectionSize}"/>
+        <!--配置监控统计-->
+        <property name="filters" value="${druid.filters}"/>
+    </bean>
+
+    <!--mybatis和Spring整合的SQLSessionFactory缓存-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <!--自动扫描Mapper.xml文件-->
+        <property name="mapperLocations" value="classpath:mappers/*.xml"/>
+    </bean>
+
+    <!--扫描MyBatis的持久层的接口类文件-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <property name="basePackage" value="com.mmall.permission.dao"/>
+    </bean>
+
+    <!--&lt;!&ndash; druid &ndash;&gt;-->
+    <!--<bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">-->
+        <!--<property name="slowSqlMillis" value="3000" />-->
+        <!--<property name="logSlowSql" value="true" />-->
+        <!--<property name="mergeSql" value="true" />-->
+    <!--</bean>-->
+    <!--<bean id="wall-filter" class="com.alibaba.druid.wall.WallFilter">-->
+        <!--<property name="dbType" value="mysql" />-->
+    <!--</bean>-->
+
+</beans>
