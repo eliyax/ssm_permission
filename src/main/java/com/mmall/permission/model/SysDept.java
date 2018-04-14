@@ -1,7 +1,12 @@
 package com.mmall.permission.model;
 
+import lombok.Builder;
+import lombok.ToString;
+
 import java.util.Date;
 
+@Builder
+@ToString
 public class SysDept {
     private Integer id;
 

@@ -14,4 +14,6 @@ public interface SysAclMapper {
     int updateByPrimaryKeySelective(SysAcl record);
 
     int updateByPrimaryKey(SysAcl record);
+
+    int countByAclModuleId(Integer id);
 }

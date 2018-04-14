@@ -1,7 +1,13 @@
 package com.mmall.permission.model;
 
+import lombok.*;
+
 import java.util.Date;
 
+
+@Builder
+@ToString
+@Setter
 public class SysUser {
     private Integer id;
 

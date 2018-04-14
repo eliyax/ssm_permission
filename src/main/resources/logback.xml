@@ -16,7 +16,8 @@ configuration 子节点为 appender、logger、root
             <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度 %logger输出日志的logger名 %msg：日志消息，%n是换行符 -->
             <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
             <!--解决乱码问题-->
-            <charset>UTF-8</charset>
+            <!--<charset>UTF-8</charset>-->
+            <charset>GBK</charset>
         </encoder>
     </appender>
 
@@ -53,6 +54,9 @@ configuration 子节点为 appender、logger、root
             <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
         </encoder>
     </appender>
+
+    <logger name="com.mmall.permission.dao" level="DEBUG"/>
+    <logger name="org.springframework" level="INFO"/>
 
     <!-- TRACE < DEBUG < INFO < WARN < ERROR -->
     <root level="INFO">

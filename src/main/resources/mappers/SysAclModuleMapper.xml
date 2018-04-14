@@ -151,4 +151,44 @@
       operate_ip = #{operateIp,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+    <select id="countByParentId" parameterType="int" resultType="int">
+      select count(1)
+      from sys_acl_module
+      where parent_id = #{parentId};
+    </select>
+  <select id="getChildAclModuleListByLevel" parameterType="string" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from sys_acl_module
+    where level
+    like concat(#{level},'.');
+  </select>
+  <update id="batchUpdateLevel" parameterType="map">
+    <foreach collection="aclModuleList" item="sysAclModule" separator=";">
+      update sys_acl_module
+      set level=#{sysAclModule.level}
+      where id=#{sysAckmodule.id};
+    </foreach>
+  </update>
+  <select id="countByNameAndParentId" parameterType="int" resultType="int">
+    select count(1)
+    from sys_acl_module
+    <where>
+      <if test="name != null">
+        and name=#{name}
+      </if>
+      <if test="parentId != null">
+        and parent_id=#{parentId}
+      </if>
+      <if test="id != null">
+        and id!=#{id};
+
+      </if>
+    </where>
+  </select>
+  <select id="getAllAclModule" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from sys_acl_module;
+  </select>
 </mapper>
