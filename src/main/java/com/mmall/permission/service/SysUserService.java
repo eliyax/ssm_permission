@@ -85,4 +85,8 @@ public class SysUserService {
     public SysUser findByKeyword(String username) {
         return sysUserMapper.findByKeyword(username);
     }
+
+    public List<SysUser> getAll() {
+        return sysUserMapper.getAll();
+    }
 }

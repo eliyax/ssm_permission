@@ -28,4 +28,8 @@ public interface SysUserMapper {
     int countByTelephone(@Param("telephone")String telephone, @Param("id")Integer id);
 
     SysUser findByKeyword(String username);
+
+    List<SysUser> getByIdList(@Param("userIdList") List<Integer> userIdList);
+
+    List<SysUser> getAll();
 }

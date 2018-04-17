@@ -127,4 +127,25 @@
       operate_ip = #{operateIp,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+    <select id="countByName" resultType="int" parameterType="map">
+      select count(1)
+      from sys_role
+      where name=#{name}
+      <if test="id != null">
+        and id =#{id}
+      </if>
+    </select>
+    <select id="getAll" resultMap="BaseResultMap">
+      select <include refid="Base_Column_List"/>
+      from sys_role
+    </select>
+  <select id="getByIdList" resultMap="BaseResultMap" parameterType="map">
+    select <include refid="Base_Column_List"/>
+    from sys_role
+    where id in
+    <foreach collection="idList" separator="," item="id" open="(" close=")">
+      #{id}
+    </foreach>
+
+  </select>
 </mapper>

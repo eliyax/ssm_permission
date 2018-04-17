@@ -1,7 +1,10 @@
 package com.mmall.permission.model;
 
+import lombok.Builder;
+
 import java.util.Date;
 
+@Builder
 public class SysRole {
     private Integer id;
 

@@ -1,7 +1,11 @@
 package com.mmall.permission.model;
 
+import lombok.Builder;
+import lombok.ToString;
+
 import java.util.Date;
 
+@Builder
 public class SysAcl {
     private Integer id;
 
